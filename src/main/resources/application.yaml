@@ -1,1 +1,22 @@
-spring.application.name=discovery-service
+spring:
+  application:
+    name: discovery-service
+  cloud:
+    config:
+      discovery:
+        enabled: true
+      name: config-service
+  config:
+    import: "optional:configserver:"
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVICE_URL:http://${spring.application.name}:${server.port}/eureka/}
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    prefer-ip-address: true
